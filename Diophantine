@@ -1,0 +1,59 @@
+packages = (6,9,20)   # variable that contains package sizes o variables
+A = packages[0] # componente A de la lista 
+B = packages[1] # componente b de la lista
+C = packages[2] # componente c de la lista
+print(A +B +C) 
+limite = 200 # limite de n
+solucion_si = 0 # cuente el numero de soluciones que complen con los requisitos
+solucion_no = 0 # cuenta el numero de soluciones que no complen los requisitos
+iteraciones = 0 # cuenta el numero de iteraciones
+x = 1 # se inicia la variable X con el valor 1
+soluciones = [] # Guarda una solucion de cada 6
+contador_cada_6_sol = 0
+
+##########################
+# Empieza el programa
+
+for n in range(1, limite + 1): # n es el numero para el que se buscaran las soluciones
+    if n > (A + B + C):
+        limite_z = n / C
+        int_limite_z = int(limite_z) # limite de las iteraciones de z
+        #print('limite',limite,'int_limite',int_limite)
+        
+        for z in range(1,int_limite_z + 1):
+            cz = C * z 
+            #print('limite',limite,'int_limite',int_limite,'z:',z,'cz:', cz)
+            limite_y = limite / B # establece el limite de y
+            int_limite_y = int(limite_y) # limite de las iteraciones de y
+            
+            for y in range(1,int_limite_y + 1):
+                by = B * y
+                x_contante = (n - cz - by) # el denominador de la formula
+                
+                if x_contante % A == 0 and (x_contante / A) > 0:
+                    solucion_si += 1
+                    iteraciones += 1
+                    contador_cada_6_sol += 1
+                    x = x_contante / A #que calcule x
+                    paquetes = A * x + B * y + C * z
+                    print('solucion para n:',n,'x:',x,'y:',y,'z:',z,'suma', paquetes)
+                    
+                    if (contador_cada_6_sol % 6) == 0:
+                        soluciones.append(n,x,y,z)                        
+                        
+                else:
+                    iteraciones += 1
+                    solucion_no += 1
+                    contador_cada_6_sol = 0
+                    #print('no existe solucion para n:',n,'x:',x,'y:',y,'z:',z)
+
+print('soluciones:',solucion_si)
+print('Largest number of McNuggets that cannot be bought in exact quantity',solucion_no)
+print('iteraciones:',iteraciones)
+print('Given package sizes,',packages[0],',',packages[1], 'and',packages[2],'the largest number of McNuggets that\ncannot be bought in exact quantity is:',solucion_no)
+print(soluciones)
+print('''It's done''')
+
+
+
+
